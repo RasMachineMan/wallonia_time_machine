@@ -1,2 +1,17 @@
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<h1><%= @event.title %></h1>
+<% @event.media.each do |m| %>
+  <p><%= image_tag m.url, size: "200x200"%></p>
+  <p class="text-center"> <%= m.description %></p>
+<% end %>
+
+
+<p><i class="fa fa-street-view"></i>maria</p>
+<p><%= @event.description %></p>
+<p><%= @event.url %></p>
+<p><%= @event.start_year %> - <%= @event.end_year %></p>
+
+
+
+
+
+
