@@ -1,2 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+body{
+  margin: 0;
+}
+#map{
+  height:800px;
+  width:100%;
+}
