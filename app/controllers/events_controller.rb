@@ -1,9 +1,5 @@
 class EventsController < ApplicationController
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 88abaa004b496ca8958586a611696169b60233e2
   def index
     @events = Event.all
   end
