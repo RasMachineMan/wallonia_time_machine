@@ -1,31 +1,15 @@
-<h1>Ausom map</h1>
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
-</div>
+<div id="map"></div>
 
-
-<%= javascript_tag do %>
-handler = Gmaps.build('Google');
-handler.buildMap({
-    provider: {
-      disableDefaultUI: true
-      // pass in other Google Maps API options here
-    },
-    internal: {
-      id: 'map'
-    }
-  },
-  function(){
-    markers = handler.addMarkers([
-      {
-        "lat": 0,
-        "lng": 0,
-        "infowindow": "hello!"
-      }
-    ]);
-    handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-  }
-);
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $(document).on('ready', function() {
+      handler = Gmaps.build('Google');
+      handler.buildMap({ internal: { id: 'map' } }, function(){
+        markers = handler.addMarkers(<%= raw @markers.to_json %>);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+      });
+    })
+  <% end %>
 <% end %>
 
