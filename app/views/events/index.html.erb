@@ -1,4 +1,21 @@
-<div id="map"></div>
+<div id="map">
+</div>
+
+  <div id="slider-container">
+  <div class="era list-inline">
+    <li id="middle">Middle ages</li>
+    <li id="other">Right ages</li>
+    <li id="right">Other ages</li>
+  </div>
+    <input id="slider" type="range" min="1500" max="2015" step="10" />
+  <% @events.each do |event| %>
+  <i class="fa fa-caret-down"></i>
+ <%= event.start_year %>
+  <% end %>
+  </div>
+
+
+</div>
 
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
@@ -9,6 +26,12 @@
         handler.bounds.extendWith(markers);
         handler.fitMapToBounds();
       });
+
+ document.getElementById('slider').addEventListener('change', function() {
+      var selected = this.value;
+      console.log("selected ", selected);
+  });
+
     })
   <% end %>
 <% end %>

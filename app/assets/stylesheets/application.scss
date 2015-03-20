@@ -1,10 +1,48 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
+
 
 body{
   margin: 0;
 }
 #map{
-  height:800px;
+
+  min-height:800px;
   width:100%;
+}
+
+#slider-container{
+  position:absolute;
+  width:100%;
+  padding:1%;
+  bottom: 20%;
+  border-radius: 5%;
+  background-color: rgba(100,100,100,0.5);
+
+}
+
+.era{
+  position: absolute;
+  top:0;
+  height: 10%;
+  color:white;
+  width: 100%;
+}
+
+.era li{
+  padding-left: 1em;
+}
+
+#middle{
+  background-color:rgba(200,100,100,0.5);
+  width: 10%;
+}
+#other{
+  background-color:rgba(100,200,100,0.5);
+  width: 30%;
+}
+#right{
+  background-color:rgba(100,100,200,0.5);
+  width: 40%;
 }
