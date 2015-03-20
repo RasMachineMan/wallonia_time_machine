@@ -9,8 +9,8 @@
 
     <li id="an" class="period" data-period='3976' style="width: <%= Event.get_period_percent(3976) %>%">Antiquité</li>
     <li id="ma" class="period" data-period='1016' style="width: <%= Event.get_period_percent(1016) %>%">Moyen Âge</li>
-    <li id="tm" class="period" data-period='297' style="width: <%= Event.get_period_percent(297) %>%">Temps Modernes</li>
-    <li id="ec" class="period" data-period='226' style="width: <%= Event.get_period_percent(226) %>%">Epoque Contemporaine</li>
+    <li id="tm" class="period" data-period='297' style="width: <%= Event.get_period_percent(297) %>%">T.Modernes</li>
+    <li id="ec" class="period" data-period='226' style="width: <%= Event.get_period_percent(226) %>%">Contemporaine</li>
   </div>
     <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
   </div>
@@ -21,7 +21,6 @@
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
 
-d3.selectAll('.period').html('hello');
 
 var percent = d3.scale.linear()
     .domain([<%= Event::FIRST_YEAR %>,<%= Event::LAST_YEAR %>])
