@@ -3,15 +3,16 @@
 
   <div id="slider-container">
   <div class="era list-inline">
-    <li id="middle">Middle ages</li>
-    <li id="other">Right ages</li>
-    <li id="right">Other ages</li>
-  </div>
-    <input id="slider" type="range" min="1500" max="2015" step="10" />
   <% @events.each do |event| %>
-  <i class="fa fa-caret-down"></i>
- <%= event.start_year %>
-  <% end %>
+    <i class="arrow fa fa-caret-down" style="left:<%= event.inrange %>%"><%= event.start_year %></i>
+    <% end %>
+
+    <li id="an" style="width: <%= Event.get_period_percent(3976) %>%">Antiquité</li>
+    <li id="ma" style="width: <%= Event.get_period_percent(1016) %>%">Moyen Âge</li>
+    <li id="tm" style="width: <%= Event.get_period_percent(297) %>%">Temps Modernes</li>
+    <li id="ec" style="width: <%= Event.get_period_percent(226) %>%">Epoque Contemporaine</li>
+  </div>
+    <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
   </div>
 
 
