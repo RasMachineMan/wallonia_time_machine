@@ -1,7 +1,31 @@
-<div id="map"></div>
+<div id="map">
+</div>
+
+  <div id="slider-container">
+  <div class="era list-inline">
+  <% @events.each do |event| %>
+    <i class="arrow fa fa-caret-down" style="left:<%= event.inrange %>%"><%= event.start_year %></i>
+    <% end %>
+
+    <li id="an" class="period" data-period='3976' style="width: <%= Event.get_period_percent(3976) %>%">Antiquité</li>
+    <li id="ma" class="period" data-period='1016' style="width: <%= Event.get_period_percent(1016) %>%">Moyen Âge</li>
+    <li id="tm" class="period" data-period='297' style="width: <%= Event.get_period_percent(297) %>%">T.Modernes</li>
+    <li id="ec" class="period" data-period='226' style="width: <%= Event.get_period_percent(226) %>%">Contemporaine</li>
+  </div>
+    <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
+  </div>
+
+
+</div>
 
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
+
+
+var percent = d3.scale.linear()
+    .domain([<%= Event::FIRST_YEAR %>,<%= Event::LAST_YEAR %>])
+    .range([0 , 100]);
+
     $(document).on('ready', function() {
       handler = Gmaps.build('Google');
       handler.buildMap({ internal: { id: 'map' } }, function(){
@@ -9,7 +33,30 @@
         handler.bounds.extendWith(markers);
         handler.fitMapToBounds();
       });
+
+ document.getElementById('slider').addEventListener('change', function() {
+      var selected = this.value;
+      console.log("selected ", selected);
+  });
+
     })
   <% end %>
 <% end %>
+
+<!-- handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      "lat": 0,
+      "lng": 0,
+      "picture": {
+        "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+        "width":  36,
+        "height": 36
+      },
+      "infowindow": "hello!"
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds(); -->
 
