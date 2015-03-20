@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
 
   FIRST_YEAR = -3500
   LAST_YEAR = Time.now.year
-
+  TOTAL_YEARS = - FIRST_YEAR + LAST_YEAR
   def inrange
     ((start_year - Event::FIRST_YEAR) * 100 / (Event::LAST_YEAR - Event::FIRST_YEAR) * 100 ) / 100
   end
