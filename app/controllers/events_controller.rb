@@ -49,7 +49,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    require(:event).permit(:title, :description, :start_year, :end_year, :type, :latitude, :longitude, :url)
+    require(:event).permit(:title, :description, :start_year, :end_year, :icon_type, :latitude, :longitude, :url)
   end
 
 end
