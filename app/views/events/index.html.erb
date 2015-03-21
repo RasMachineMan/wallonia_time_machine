@@ -1,6 +1,12 @@
 <div id="map">
 </div>
 
+<div id="container" class="container">
+    <div id="map" class="map">
+    </div>
+  </div>
+
+
   <div id="slider-container">
   <div class="era list-inline">
   <% @events.each do |event| %>
@@ -22,24 +28,39 @@
   <%= javascript_tag do %>
 
 
-var percent = d3.scale.linear()
-    .domain([<%= Event::FIRST_YEAR %>,<%= Event::LAST_YEAR %>])
-    .range([0 , 100]);
 
-    $(document).on('ready', function() {
-      handler = Gmaps.build('Google');
-      handler.buildMap({ internal: { id: 'map' } }, function(){
-        markers = handler.addMarkers(<%= raw @markers.to_json %>);
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
-      });
+   document.getElementById('slider').addEventListener('change', function() {
+        var selected = this.value;
+        console.log("selected ", selected);
+    });
 
- document.getElementById('slider').addEventListener('change', function() {
-      var selected = this.value;
-      console.log("selected ", selected);
-  });
 
-    })
+  var tileServer = 'http://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png'
+
+  var tileAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
+  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoomAnimationThreshold:7}).setView([49.8407, 5.2515], 12);
+
+        L.tileLayer(tileServer, {attribution: tileAttribution,   noWrap:true}).addTo(map);
+
+        var markers = L.markerClusterGroup();
+
+  var markerMap = {};
+  var popUpMap = {};
+
+  <% @events.each do |event| %>
+
+    var marker = L.marker([<%= event.latitude %>, <%= event.longitude %>]);
+
+      marker.id = <%= event.id %>;
+      markerMap[<%= event.id %>] = marker;
+      popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id))  %></p>');
+      // markers[<%= event.id %>] = marker ;
+      console.log(markers);
+      markers.addLayer(marker);
+      map.addLayer(marker);
+    <% end %>
+
   <% end %>
 <% end %>
 
