@@ -11,7 +11,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    render :layout => false
+    @ajax = params[:ajax] == "yes"
+    render :layout => !@ajax
   end
 
   def create

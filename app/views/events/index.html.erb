@@ -106,7 +106,7 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       marker.start_year = <%= event.start_year %>;
       marker.period = getperiod(marker.start_year);
       markerMap[<%= event.id %>] = marker;
-      popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id), { onclick: "$.fancybox( {href : '" + event_path(event.id) + "', type: 'ajax'} );return false;" })  %></p>');
+      popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id), { onclick: "$.fancybox( {href : '" + event_path(event.id) + "?ajax=yes', type: 'ajax'} );return false;" })  %></p>');
       // markers[<%= event.id %>] = marker ;
 
       marker.addTo(map);
