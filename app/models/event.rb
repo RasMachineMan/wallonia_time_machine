@@ -1,14 +1,14 @@
 class Event < ActiveRecord::Base
   has_many :media
 
-  FIRST_YEAR = -3500
+  FIRST_YEAR = 0
   LAST_YEAR = Time.now.year
   TOTAL_YEARS = - FIRST_YEAR + LAST_YEAR
   PERIODS = [
-    ["Antiquite", -3500 , 476 ],
+    ["Antiquite", 0 , 476 ],
     ["Moyen Âge", 476 , 1492],
-    ["T.M",1492 , 1789 ],
-    ["E.C", 1789, LAST_YEAR]
+    ["T.Modernes",1492 , 1789 ],
+    ["E.Contemporaine", 1789, LAST_YEAR]
   ]
 
   def inrange

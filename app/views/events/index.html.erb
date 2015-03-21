@@ -1,55 +1,17 @@
-<div id="container" >
-  <div id="map" class="map">
-</div>
 
-<div id="slider-container">
-  <div class="era list-inline">
-</div>
-  <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
+<div id="container" >
+  <div id="map" class="map"></div>
+  <div id="slider-container">
+    <div class="era list-inline"></div>
+    <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
+    <div id ="selected-year"></div>
   </div>
 </div>
 
 <div id="add_place">
-  <%= form_for @event do |f| %>
-  <p>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </p>
-  <p>
-    <%= f.label :start_year %>
-    <%= f.number_field :start_year %>
-  </p>
-  <p>
-    <%= f.label :latitude %>
-    <%= f.number_field :latitude, :step => 'any'%>
-  </p>
-  <p>
-    <%= f.label :longitude %>
-    <%= f.number_field :longitude, :step => 'any'%>
-  </p>
-  <p>
-    <%= f.label :url %>
-    <%= f.text_field :url %>
-  </p>
-  <p>
-    <%= f.label :period %>
-    <%= f.text_field :period %>
-  </p>
-  <p>
-    <%= f.label :icon_type%>
-    <%= f.text_field :icon_type %>
-  </p>
-  <p>
-    <%= f.submit%>
-  </p>
-    <% end %>
+
   </div>
 </div>
-
 
 
 
@@ -70,16 +32,17 @@ var periodPercent = d3.scale.linear()
     .range([0, 100]);
 
 var arrayOfLatLngs = [];
+
   <% @events.each do |event| %>
   arrayOfLatLngs.push([<%= event.latitude %>, <%= event.longitude %>]);
-  d3.select('#slider-container').insert("i", ":first-child").attr("id","arrow<%= event.id %>").attr("class", "arrow fa fa-caret-down").style('left', year(<%= event.start_year %>)+ '%' ).html('<%= event.start_year %>');
+  d3.select('#slider-container').insert("i", ":first-child").attr("id","arrow<%= event.id %>").attr("class", "arrow fa fa-caret-down").style('left', year(<%= event.start_year %>)+ '%' );
 
     <% end %>
 
-    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[0][0][0] %>').attr('id', 'an').style('width', periodPercent(3976)+'%').html('<%= Event::PERIODS[0][0] %>');
-    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[1][0][0] %>').attr('id', 'ma').style('width', periodPercent(1016)+'%').html('<%= Event::PERIODS[1][0] %>');;
-    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[2][0][0] %>').attr('id', 'tm').style('width', periodPercent(297)+'%').html('<%= Event::PERIODS[2][0] %>');;
-    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[3][0][0] %>').attr('id', 'ec').style('width', periodPercent(226)+'%').html('<%= Event::PERIODS[3][0] %>');;
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[0][0][0] %>').attr('class', 'A').style('width', periodPercent(476)+'%').html('<%= Event::PERIODS[0][0] %>');
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[1][0][0] %>').attr('class', 'M').style('width', periodPercent(1016)+'%').html('<%= Event::PERIODS[1][0] %>');;
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[2][0][0] %>').attr('class', 'T').style('width', periodPercent(297)+'%').html('<%= Event::PERIODS[2][0] %>');;
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[3][0][0] %>').attr('class', 'E').style('width', periodPercent(226)+'%').html('<%= Event::PERIODS[3][0] %>');;
 
 var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
@@ -91,16 +54,19 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
   var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoomAnimationThreshold:7}).fitBounds(bounds);
 
-        L.tileLayer(tileServer, {attribution: tileAttribution,   noWrap:true}).addTo(map);
+  L.tileLayer(tileServer, {attribution: tileAttribution, noWrap:true}).addTo(map);
 
-        var markers = {};
+  var markers = {};
 
   var markerMap = {};
   var popUpMap = {};
+  var myIcon = L.divIcon({
+    iconSize: new L.Point(45, 45),
+});
 
   <% @events.each do |event| %>
 
-    var marker = L.marker([<%= event.latitude %>, <%= event.longitude %>]);
+    var marker = L.marker([<%= event.latitude %>, <%= event.longitude %>], {icon:myIcon});
 
       marker.id = <%= event.id %>;
       marker.start_year = <%= event.start_year %>;
@@ -108,7 +74,11 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       markerMap[<%= event.id %>] = marker;
       popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id), { onclick: "$.fancybox( {href : '" + event_path(event.id) + "?ajax=yes', type: 'ajax'} );return false;" })  %></p>');
       // markers[<%= event.id %>] = marker ;
-
+      <% if event.icon_type %>
+      marker.icon_type = '<%= event.icon_type %>'
+      <% end %>
+      marker.options.icon.options.className = "icon-round";
+      marker.options.icon.options.html = '<div class="icon-circle ' + marker.period[0] + '">' + getIcon('<%= event.icon_type %>') + '</div><div class="tip fa fa-caret-down"></div>';
       marker.addTo(map);
 	<% if @highlight == event.id %>
 	marker.openPopup();
@@ -117,7 +87,9 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
    var range = 300;
    document.getElementById('slider').addEventListener('change', function() {
-        var selected = parseInt(this.value);
+
+        var selected = this.value;
+        d3.select('#selected-year').html(selected);
         console.log("selected ", selected);
       _.each(markerMap, function(marker){
 
@@ -126,11 +98,11 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
 	map.removeLayer(marker);
 	if (getperiod(selected) == marker.period){
+    marker.options.icon.options.html = '<div class="icon-circle ' + marker.period[0] + '">' + getIcon(marker.icon_type) + '</div><div class="tip fa fa-caret-down"></div>';
           marker.addTo(map);
-          console.log('.' + marker.period[0]);
-          d3.select('.' + marker.period[0]).transition().style('opacity', '1');
+          d3.select('.m').html("hola").style('opacity', '1');
         }else{
-        d3.select('.' + marker.period[0]).transition().style('opacity', '0.8');
+          d3.select('.' + marker.period[0]).style('opacity', '0.8');
         }
 
       if (selected - range < marker.start_year && selected + range > marker.start_year){
@@ -150,6 +122,35 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
    <% end %>
 
 });
+
+function getIcon(icon_type){
+  switch (icon_type) {
+    case  "tree":
+        return "<i class='fa fa-tree'></i>";
+        break;
+    case "monument":
+        return "<i class='fa fa-university'></i>";
+        break;
+    case "plane crash":
+        return "<i class='fa fa-fighter-jet'></i>";
+        break;
+    case "beer places":
+        return "<i class='fa fa-beer'></i>";
+        break;
+    case "artifact":
+        return "<i class='fa fa-trophy'></i>";
+        break;
+   case "events":
+        return "<i class='fa fa-users'></i>";
+        break;
+   case "":
+        return "no icon";
+        break;
+    default:
+        return "none";
+        break;
+  }
+}
 
 function getperiod(start_year){
   switch (true) {
