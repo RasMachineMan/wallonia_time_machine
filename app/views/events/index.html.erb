@@ -27,12 +27,15 @@ var year = d3.scale.linear()
     .domain([<%= Event::FIRST_YEAR %>, <%= Event::LAST_YEAR %>])
     .range([0, 100]);
 
+var arrayOfLatLngs = [];
   <% @events.each do |event| %>
+	arrayOfLatLngs.push([<%= event.latitude %>, <%= event.longitude %>]);
   d3.select('.era').append('i').attr("class", "arrow fa fa-caret-down").style('left', year(<%= event.start_year %>)+ '%' ).html('<%= event.start_year %>');
     <% end %>
 
    // d3.select('.era').append('li').attr('class', 'period');
 
+var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
 
 
@@ -40,7 +43,7 @@ var year = d3.scale.linear()
 
   var tileAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoomAnimationThreshold:7}).setView([49.8407, 5.2515], 12);
+  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoomAnimationThreshold:7}).fitBounds(bounds);
 
         L.tileLayer(tileServer, {attribution: tileAttribution,   noWrap:true}).addTo(map);
 
