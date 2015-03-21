@@ -69,11 +69,14 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       // markers[<%= event.id %>] = marker ;
 
       marker.addTo(map);
-
+	<% if @highlight == event.id %>
+	marker.openPopup();
+	<% end %>
     <% end %>
 
+   var range = 300;
    document.getElementById('slider').addEventListener('change', function() {
-        var selected = this.value;
+        var selected = parseInt(this.value);
         console.log("selected ", selected);
       _.each(markerMap, function(marker){
 
@@ -89,7 +92,7 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
         d3.select('.' + marker.period[0]).transition().style('opacity', '0.8');
         }
 
-      if (selected - range < marker.start_year && parseInt(selected) + range > marker.start_year){
+      if (selected - range < marker.start_year && selected + range > marker.start_year){
         marker.openPopup();
         d3.select('#arrow' + marker.id).style('font-size','1.2em');
       }else{
@@ -98,6 +101,12 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       }
 
       });
+
+   <% if @highlight %>
+      if( markerMap[<%= @highlight %>] !== undefined ) {
+        document.getElementById('slider').value = markers[<%= @highlight %>].start_year;
+      }
+   <% end %>
 
 });
 

@@ -2,7 +2,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-
+    @highlight = params[:highlight].to_i
   end
 
   def new
