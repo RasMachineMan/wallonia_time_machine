@@ -30,7 +30,6 @@
 
 
 
-
   var tileServer = 'http://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png'
 
   var tileAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -58,6 +57,7 @@
       marker.addTo(map);
 
     <% end %>
+
 
    document.getElementById('slider').addEventListener('change', function() {
         var selected = this.value;
@@ -104,6 +104,7 @@ function getperiod(start_year){
   }
 
 };
+
 
   <% end %>
 <% end %>
