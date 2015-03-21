@@ -42,7 +42,7 @@
 			<a class="btn btn-primary" href="/?highlight=<%= @event.id %>" role="button">View on map</a>
 		<% end %>
 		<% if @event.url %>
-		<a class="btn btn-info" href="<%= @event.url %>" role="button">More info</a>
+		<a class="btn btn-info" href="<%= @event.url %>" target="_blank" role="button">More info</a>
 		<% end %>
 	  </div>
 	  <h2 class="featurette-heading"><%= @event.title %><span class="text-muted"> <%= @event.start_year %></span></h2>
