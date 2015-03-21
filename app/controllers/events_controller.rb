@@ -2,13 +2,6 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-
-    @markers = Gmaps4rails.build_markers(@events) do |event, marker|
-      marker.lat event.latitude
-      marker.lng event.longitude
-      marker.title event.title
-      marker.infowindow
-    end
   end
 
   def new

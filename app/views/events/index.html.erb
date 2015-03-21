@@ -21,23 +21,22 @@
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
 
+      var percent = d3.scale.linear()
+          .domain([<%= Event::FIRST_YEAR %>,<%= Event::LAST_YEAR %>])
+          .range([0 , 100]);
 
-var percent = d3.scale.linear()
-    .domain([<%= Event::FIRST_YEAR %>,<%= Event::LAST_YEAR %>])
-    .range([0 , 100]);
+          $(document).on('ready', function() {
+            handler = Gmaps.build('Google');
+            handler.buildMap({ internal: { id: 'map' } }, function(){
+              markers = handler.addMarkers(<%= raw @markers.to_json %>);
+              handler.bounds.extendWith(markers);
+              handler.fitMapToBounds();
+            });
 
-    $(document).on('ready', function() {
-      handler = Gmaps.build('Google');
-      handler.buildMap({ internal: { id: 'map' } }, function(){
-        markers = handler.addMarkers(<%= raw @markers.to_json %>);
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
-      });
-
- document.getElementById('slider').addEventListener('change', function() {
-      var selected = this.value;
-      console.log("selected ", selected);
-  });
+       document.getElementById('slider').addEventListener('change', function() {
+            var selected = this.value;
+            console.log("selected ", selected);
+        });
 
     })
   <% end %>

@@ -1,53 +1,47 @@
 
+  <div class="container-fluid">
+    <h1><%= @event.title %></h1>
+    <div class="row">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active">  </li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
 
-<div class="container-fluid">
-  <h1><%= @event.title %></h1>
-  <div class="row">
-  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active">  </li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-      </ol>
+        <!-- Wrapper for slides CORRECT -->
 
-
-
-    <!-- Wrapper for slides CORRECT -->
-
-    <div class="carousel-inner">
+        <div class="carousel-inner">
           <% @event.media.each_with_index do |m, index| %>
             <div class="item <% if index == 0 %>active<% end %>">
               <%= image_tag(m.url) %>
-            <div class="carousel-caption">
-              <%= m.description %>
-            </div>
-            </div>
-          <% end %>
+                <div class="carousel-caption">
+                  <%= m.description %>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
+
+      <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+
+      </div>
     </div>
+    <!-- Carousel -->
 
-
-
-
-  <!-- Controls -->
-    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-    </a>
-
-    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-
+    <div class="container-fluid">
+      <div class="row">
+        <h3><%= @event.description %></h3>
+        <p><%= @event.url %></p>
+        <p><%= @event.start_year %> - <%= @event.end_year %></p>
+      </div>
+    </div>
   </div>
-  </div>
-  <!-- Carousel -->
-
-<div class="container-fluid">
-  <div class="row">
-    <h3><%= @event.description %></h3>
-    <p><%= @event.url %></p>
-    <p><%= @event.start_year %> - <%= @event.end_year %></p>
-  </div>
-</div>
-</div>
