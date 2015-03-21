@@ -24,14 +24,6 @@ img {
   margin-right: auto;
 }
 
-.container-fluid {
-  margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    align-content: center;
-    background-color: grey;
-}
-
 .row {
   padding-left: 20px;
 }
@@ -46,7 +38,6 @@ img {
   padding: 1%;
   bottom: 20%;
   border-radius: 5%;
-  background-color: rgba(100,100,100,0.5);
 
 }
 #slider{
@@ -82,4 +73,8 @@ img {
 
 #ec {
   background-color:rgba(200,100,200,0.5);
+}
+
+.row div {
+  margin-bottom: 10px;
 }
