@@ -44,11 +44,17 @@ img {
   position:absolute;
   width: 100%;
   padding: 1%;
-  bottom: 20%;
+  bottom: 3%;
   border-radius: 5%;
   background-color: rgba(100,100,100,0.5);
 
+
 }
+
+.period {
+  height: 3px;
+}
+
 #slider{
   margin-top: 2%;
   z-index: 50;
@@ -57,7 +63,7 @@ img {
 .era{
   position: absolute;
   top:0;
-  height: 10%;
+  height: 2%;
   color:white;
   width: 100%;
 }
