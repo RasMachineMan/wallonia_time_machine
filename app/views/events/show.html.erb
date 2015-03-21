@@ -34,6 +34,10 @@
 
       <div class="row featurette">
         <div class="col-md-12">
+	  <div class="">
+		<a class="btn btn-primary" href="/?highlight=<%= @event.id %>" role="button">Back to map</a>
+		<a class="btn btn-info" href="<%= @event.url %>" role="button">More info</a>
+	  </div>
 	  <h2 class="featurette-heading"><%= @event.title %><span class="text-muted"> <%= @event.start_year %></span></h2>
           <p class="lead"><%= @event.description %></p>
         </div>
