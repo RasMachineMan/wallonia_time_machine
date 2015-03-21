@@ -8,6 +8,50 @@
   </div>
 </div>
 
+<div id="add_place">
+  <%= form_for @event do |f| %>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :start_year %>
+    <%= f.number_field :start_year %>
+  </p>
+  <p>
+    <%= f.label :latitude %>
+    <%= f.number_field :latitude, :step => 'any'%>
+  </p>
+  <p>
+    <%= f.label :longitude %>
+    <%= f.number_field :longitude, :step => 'any'%>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :period %>
+    <%= f.text_field :period %>
+  </p>
+  <p>
+    <%= f.label :icon_type%>
+    <%= f.text_field :icon_type %>
+  </p>
+  <p>
+    <%= f.submit%>
+  </p>
+    <% end %>
+  </div>
+</div>
+
+
+
+
 
 
 
@@ -64,7 +108,7 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       marker.start_year = <%= event.start_year %>;
       marker.period = getperiod(marker.start_year);
       markerMap[<%= event.id %>] = marker;
-      popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id))  %></p>');
+      popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id), { onclick: "$.fancybox( {href : '" + event_path(event.id) + "', type: 'ajax'} );return false;" })  %></p>');
       // markers[<%= event.id %>] = marker ;
       <% if event.icon_type %>
       marker.icon_type = '<%= event.icon_type %>'
@@ -72,10 +116,14 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       marker.options.icon.options.className = "icon-round";
       marker.options.icon.options.html = '<div class="icon-circle ' + marker.period[0] + '">' + getIcon('<%= event.icon_type %>') + '</div><div class="tip fa fa-caret-down"></div>';
       marker.addTo(map);
-
+	<% if @highlight == event.id %>
+	marker.openPopup();
+	<% end %>
     <% end %>
 
+   var range = 300;
    document.getElementById('slider').addEventListener('change', function() {
+
         var selected = this.value;
         d3.select('#selected-year').html(selected);
         console.log("selected ", selected);
@@ -93,8 +141,7 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
           d3.select('.' + marker.period[0]).style('opacity', '0.8');
         }
 
-      if (selected - range < marker.start_year && parseInt(selected) + range > marker.start_year){
-
+      if (selected - range < marker.start_year && selected + range > marker.start_year){
         marker.openPopup();
         d3.select('#arrow' + marker.id).style('font-size','1.2em');
       }else{
@@ -103,6 +150,12 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       }
 
       });
+
+   <% if @highlight %>
+      if( markerMap[<%= @highlight %>] !== undefined ) {
+        document.getElementById('slider').value = markers[<%= @highlight %>].start_year;
+      }
+   <% end %>
 
 });
 

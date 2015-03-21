@@ -2,7 +2,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-
+    @highlight = params[:highlight].to_i
   end
 
   def new
@@ -11,6 +11,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    render :layout => false
   end
 
   def create
