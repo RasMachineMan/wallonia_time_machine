@@ -69,19 +69,16 @@ var year = d3.scale.linear()
         console.log("selected ", selected);
       _.each(markerMap, function(marker){
 
+	map.removeLayer(marker);
+	if (getperiod(selected) == marker.period){
+          marker.addTo(map);
+        }
+
       var range = 300;
       if (selected - range < marker.start_year && parseInt(selected) + range > marker.start_year){
         marker.openPopup();
       }else{
         marker.closePopup();
-      }
-
-      if (getperiod(selected) == marker.period){
-        marker.setOpacity(1)
-
-      }else{
-        marker.setOpacity(0)
-
       }
 
       });
