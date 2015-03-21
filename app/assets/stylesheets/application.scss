@@ -3,9 +3,6 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-@import "font-awesome-sprockets";
-@import "font-awesome";
-
 body{
   // margin: 0;
   font-family: Montserrat;
@@ -35,6 +32,7 @@ img {
 
 .row {
   padding-left: 20px;
+}
 
 .arrow{
   position:absolute;
@@ -68,15 +66,18 @@ img {
   height: 3em;
 }
 
-#an{
+#an {
   background-color:rgba(200,100,100,0.5);
 }
-#ma{
+
+#ma {
   background-color:rgba(100,200,100,0.5);
 }
-#tm{
+
+#tm {
   background-color:rgba(100,100,200,0.5);
 }
-#ec{
+
+#ec {
   background-color:rgba(200,100,200,0.5);
 }
