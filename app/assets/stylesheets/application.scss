@@ -1,10 +1,83 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 body{
-  margin: 0;
+  // margin: 0;
+  font-family: Montserrat;
 }
+
 #map{
-  height:800px;
+
+  min-height:800px;
   width:100%;
+}
+
+img {
+  height: 300px;
+  width: 300px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-fluid {
+  margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    align-content: center;
+    background-color: grey;
+}
+
+.row {
+  padding-left: 20px;
+}
+
+.arrow{
+  position:absolute;
+}
+
+#slider-container{
+  position:absolute;
+  width: 100%;
+  padding: 1%;
+  bottom: 20%;
+  border-radius: 5%;
+  background-color: rgba(100,100,100,0.5);
+
+}
+#slider{
+  margin-top: 2%;
+  z-index: 50;
+}
+
+.era{
+  position: absolute;
+  top:0;
+  height: 10%;
+  color:white;
+  width: 100%;
+}
+
+.era li{
+  z-index: 0;
+  padding-left: 1em;
+  height: 3em;
+}
+
+#an {
+  background-color:rgba(200,100,100,0.5);
+}
+
+#ma {
+  background-color:rgba(100,200,100,0.5);
+}
+
+#tm {
+  background-color:rgba(100,100,200,0.5);
+}
+
+#ec {
+  background-color:rgba(200,100,200,0.5);
 }
