@@ -7,8 +7,8 @@ class Event < ActiveRecord::Base
   PERIODS = [
     ["Antiquite", -3500 , 476 ],
     ["Moyen Âge", 476 , 1492],
-    ["Temps Modernes",1492 , 1789 ],
-    ["Epoque Contemporaine", 1789, LAST_YEAR]
+    ["T.M",1492 , 1789 ],
+    ["E.C", 1789, LAST_YEAR]
   ]
 
   def inrange
