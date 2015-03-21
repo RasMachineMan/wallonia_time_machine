@@ -2,6 +2,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+    @highlight = params[:highlight].to_i
   end
 
   def new
@@ -44,7 +45,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    require(:event).permit(:title, :description, :start_year, :end_year, :icon_type, :latitude, :longitude, :url)
+    require(:event).permit(:title, :description, :start_year, :icon_type, :latitude, :longitude, :url)
   end
 
 end

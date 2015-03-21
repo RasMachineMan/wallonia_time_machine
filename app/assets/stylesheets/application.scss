@@ -4,15 +4,20 @@
 @import "font-awesome";
 @import "leaflet";
 
+html{height:100%;}
+
 body{
   // margin: 0;
   font-family: Montserrat;
+  height:100%;
 }
 
 #map{
 
-  min-height:800px;
+  min-height:100%;
   width:100%;
+    margin:0 auto;
+    height:100%;
 }
 
 
@@ -22,14 +27,6 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-
-.container-fluid {
-  margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    align-content: center;
-    background-color: grey;
 }
 
 .row {
@@ -43,22 +40,44 @@ img {
 #slider-container{
   position:absolute;
   width: 100%;
+  padding: 1.6em;
+
+
+  min-height:5%;
+
   padding: 1%;
-  bottom: 20%;
+  bottom: 3%;
   border-radius: 5%;
   background-color: rgba(100,100,100,0.5);
 
+
 }
+
+.period {
+  bottom: 5%;
+  border-radius: 2%;
+  background-color: rgba(100,100,100,0.5);
+
+}
+.arrow{
+
+  color:white;
+  margin-top: -1em;
+
+}
+
 #slider{
-  margin-top: 2%;
+  margin-top: 0.5%;
   z-index: 50;
 }
 
 .era{
-  position: absolute;
+
   top:0;
-  height: 10%;
+  height: 2%;
+  height: 5%;
   color:white;
+  background-color:black;
   width: 100%;
 }
 
@@ -66,6 +85,7 @@ img {
   z-index: 0;
   padding-left: 1em;
   height: 3em;
+  opacity:0.8;
 }
 
 #an {
@@ -82,4 +102,8 @@ img {
 
 #ec {
   background-color:rgba(200,100,200,0.5);
+}
+
+.row div {
+  margin-bottom: 10px;
 }
