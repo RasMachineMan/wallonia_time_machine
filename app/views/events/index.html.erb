@@ -1,20 +1,61 @@
-
-
 <div id="container" >
-    <div id="map" class="map">
+  <div id="map" class="map">
+</div>
 
-    </div>
-  <div id="slider-container">
-    <div class="era list-inline">
-    </div>
-    <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
+<div id="slider-container">
+  <div class="era list-inline">
+</div>
+  <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
+  </div>
+</div>
+
+<div id="add_place">
+  <%= form_for @event do |f| %>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :start_year %>
+    <%= f.number_field :start_year %>
+  </p>
+  <p>
+    <%= f.label :latitude %>
+    <%= f.number_field :latitude, :step => 'any'%>
+  </p>
+  <p>
+    <%= f.label :longitude %>
+    <%= f.number_field :longitude, :step => 'any'%>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :period %>
+    <%= f.text_field :period %>
+  </p>
+  <p>
+    <%= f.label :icon_type%>
+    <%= f.text_field :icon_type %>
+  </p>
+  <p>
+    <%= f.submit%>
+  </p>
+    <% end %>
   </div>
 </div>
 
 
 
 
-</div>
+
+
+
 
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
