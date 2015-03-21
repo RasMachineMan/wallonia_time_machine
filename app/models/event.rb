@@ -4,6 +4,12 @@ class Event < ActiveRecord::Base
   FIRST_YEAR = -3500
   LAST_YEAR = Time.now.year
   TOTAL_YEARS = - FIRST_YEAR + LAST_YEAR
+  PERIODS = [
+    ["Antiquite", -3500 , 476 ],
+    ["Moyen Âge", 476 , 1492],
+    ["Temps Modernes",1492 , 1789 ],
+    ["Epoque Contemporaine", 1789, LAST_YEAR]
+  ]
 
   def inrange
     ((start_year - Event::FIRST_YEAR) * 100 / (Event::LAST_YEAR - Event::FIRST_YEAR) * 100 ) / 100

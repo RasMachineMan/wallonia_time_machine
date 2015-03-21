@@ -27,10 +27,7 @@
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
 
-   document.getElementById('slider').addEventListener('change', function() {
-        var selected = this.value;
-        console.log("selected ", selected);
-    });
+
 
 
   var tileServer = 'http://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png'
@@ -41,7 +38,7 @@
 
         L.tileLayer(tileServer, {attribution: tileAttribution,   noWrap:true}).addTo(map);
 
-        var markers = L.markerClusterGroup();
+        var markers = {};
 
   var markerMap = {};
   var popUpMap = {};
@@ -51,13 +48,62 @@
     var marker = L.marker([<%= event.latitude %>, <%= event.longitude %>]);
 
       marker.id = <%= event.id %>;
+      marker.start_year = <%= event.start_year %>;
+      marker.period = getperiod(marker.start_year);
       markerMap[<%= event.id %>] = marker;
       popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id))  %></p>');
       // markers[<%= event.id %>] = marker ;
-      console.log(markers);
-      markers.addLayer(marker);
-      map.addLayer(marker);
+
+      marker.addTo(map);
+
     <% end %>
+
+
+   document.getElementById('slider').addEventListener('change', function() {
+        var selected = this.value;
+        console.log("selected ", selected);
+      _.each(markerMap, function(marker){
+
+      var range = 300;
+      if (selected - range < marker.start_year && parseInt(selected) + range > marker.start_year){
+        // marker.setOpacity(1)
+        marker.openPopup();
+      }else{
+        // marker.setOpacity(0)
+        marker.closePopup();
+      }
+
+      if (getperiod(selected) == marker.period){
+        marker.setOpacity(1)
+
+      }else{
+        marker.setOpacity(0)
+
+      }
+
+      });
+
+});
+
+function getperiod(start_year){
+  switch (true) {
+    case start_year < <%=  Event::PERIODS[0][2]%>:
+        return "<%= Event::PERIODS[0][0]%>";
+        break;
+    case start_year > <%= Event::PERIODS[1][1]%> && start_year < <%= Event::PERIODS[1][2]%>:
+        return "<%= Event::PERIODS[1][0]%>";
+        break;
+    case start_year > <%= Event::PERIODS[2][1]%> && start_year < <%= Event::PERIODS[2][2]%>:
+        return "<%= Event::PERIODS[2][0]%>";
+        break;
+    case start_year > <%= Event::PERIODS[3][1]%> && start_year < <%= Event::PERIODS[3][2]%>:
+        return "<%= Event::PERIODS[3][0]%>";
+        break;
+   default:
+        return "none";
+  }
+
+};
 
 
   <% end %>
