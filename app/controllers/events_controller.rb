@@ -2,7 +2,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-
+    @highlight = params[:highlight].to_i
   end
 
   def new
@@ -11,6 +11,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @ajax = params[:ajax] == "yes"
+    render :layout => !@ajax
   end
 
   def create
