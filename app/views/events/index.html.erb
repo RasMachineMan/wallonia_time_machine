@@ -1,31 +1,37 @@
-<div id="map">
-</div>
 
-<div id="container" class="container">
+
+<div id="container" >
     <div id="map" class="map">
+
     </div>
-  </div>
-
-
   <div id="slider-container">
-  <div class="era list-inline">
-  <% @events.each do |event| %>
-    <i class="arrow fa fa-caret-down" style="left:<%= event.inrange %>%"><%= event.start_year %></i>
-    <% end %>
-
-    <li id="an" class="period" data-period='3976' style="width: <%= Event.get_period_percent(3976) %>%">Antiquité</li>
-    <li id="ma" class="period" data-period='1016' style="width: <%= Event.get_period_percent(1016) %>%">Moyen Âge</li>
-    <li id="tm" class="period" data-period='297' style="width: <%= Event.get_period_percent(297) %>%">T.Modernes</li>
-    <li id="ec" class="period" data-period='226' style="width: <%= Event.get_period_percent(226) %>%">Contemporaine</li>
-  </div>
+    <div class="era list-inline">
+      <li id="an" class="period" data-period='3976' style="width: <%= Event.get_period_percent(3976) %>%">Antiquité</li>
+      <li id="ma" class="period" data-period='1016' style="width: <%= Event.get_period_percent(1016) %>%">Moyen Âge</li>
+      <li id="tm" class="period" data-period='297' style="width: <%= Event.get_period_percent(297) %>%">T.Modernes</li>
+      <li id="ec" class="period" data-period='226' style="width: <%= Event.get_period_percent(226) %>%">Contemporaine</li>
+    </div>
     <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
   </div>
+</div>
+
+
 
 
 </div>
 
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
+
+var year = d3.scale.linear()
+    .domain([<%= Event::FIRST_YEAR %>, <%= Event::LAST_YEAR %>])
+    .range([0, 100]);
+
+  <% @events.each do |event| %>
+  d3.select('.era').append('i').attr("class", "arrow fa fa-caret-down").style('left', year(<%= event.start_year %>)+ '%' ).html('<%= event.start_year %>');
+    <% end %>
+
+   // d3.select('.era').append('li').attr('class', 'period');
 
 
 
@@ -66,10 +72,8 @@
 
       var range = 300;
       if (selected - range < marker.start_year && parseInt(selected) + range > marker.start_year){
-        // marker.setOpacity(1)
         marker.openPopup();
       }else{
-        // marker.setOpacity(0)
         marker.closePopup();
       }
 
