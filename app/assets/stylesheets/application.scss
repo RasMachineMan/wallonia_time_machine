@@ -44,17 +44,27 @@ img {
 
 
   min-height:5%;
+
+  padding: 1%;
+  bottom: 3%;
+  border-radius: 5%;
+  background-color: rgba(100,100,100,0.5);
+
+
+}
+
+.period {
   bottom: 5%;
   border-radius: 2%;
   background-color: rgba(100,100,100,0.5);
 
-& i{
+}
+.arrow{
+
   color:white;
   margin-top: -1em;
-}
 
 }
-
 
 #slider{
   margin-top: 0.5%;
@@ -62,6 +72,9 @@ img {
 }
 
 .era{
+
+  top:0;
+  height: 2%;
   height: 5%;
   color:white;
   background-color:black;
@@ -72,6 +85,7 @@ img {
   z-index: 0;
   padding-left: 1em;
   height: 3em;
+  opacity:0.8;
 }
 
 #an {

@@ -23,19 +23,24 @@ var year = d3.scale.linear()
     .domain([<%= Event::FIRST_YEAR %>, <%= Event::LAST_YEAR %>])
     .range([0, 100]);
 
+
 var periodPercent = d3.scale.linear()
     .domain([0 , <%= - Event::FIRST_YEAR + Event::LAST_YEAR %>])
     .range([0, 100]);
 
+var arrayOfLatLngs = [];
   <% @events.each do |event| %>
+  arrayOfLatLngs.push([<%= event.latitude %>, <%= event.longitude %>]);
   d3.select('#slider-container').insert("i", ":first-child").attr("id","arrow<%= event.id %>").attr("class", "arrow fa fa-caret-down").style('left', year(<%= event.start_year %>)+ '%' ).html('<%= event.start_year %>');
+
     <% end %>
 
-    d3.select('.era').append('li').attr('class', 'period').attr('id', 'an').style('width', periodPercent(3976)+'%').html('<%= Event::PERIODS[0][0] %>');
-    d3.select('.era').append('li').attr('class', 'period').attr('id', 'ma').style('width', periodPercent(1016)+'%').html('<%= Event::PERIODS[1][0] %>');;
-    d3.select('.era').append('li').attr('class', 'period').attr('id', 'tm').style('width', periodPercent(297)+'%').html('<%= Event::PERIODS[2][0] %>');;
-    d3.select('.era').append('li').attr('class', 'period').attr('id', 'ec').style('width', periodPercent(226)+'%').html('<%= Event::PERIODS[3][0] %>');;
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[0][0][0] %>').attr('id', 'an').style('width', periodPercent(3976)+'%').html('<%= Event::PERIODS[0][0] %>');
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[1][0][0] %>').attr('id', 'ma').style('width', periodPercent(1016)+'%').html('<%= Event::PERIODS[1][0] %>');;
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[2][0][0] %>').attr('id', 'tm').style('width', periodPercent(297)+'%').html('<%= Event::PERIODS[2][0] %>');;
+    d3.select('.era').append('li').attr('class', 'period <%= Event::PERIODS[3][0][0] %>').attr('id', 'ec').style('width', periodPercent(226)+'%').html('<%= Event::PERIODS[3][0] %>');;
 
+var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
 
 
@@ -43,7 +48,7 @@ var periodPercent = d3.scale.linear()
 
   var tileAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoomAnimationThreshold:7}).setView([49.8407, 5.2515], 12);
+  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoomAnimationThreshold:7}).fitBounds(bounds);
 
         L.tileLayer(tileServer, {attribution: tileAttribution,   noWrap:true}).addTo(map);
 
@@ -72,21 +77,24 @@ var periodPercent = d3.scale.linear()
         console.log("selected ", selected);
       _.each(markerMap, function(marker){
 
+
       var range = 200;
+
+	map.removeLayer(marker);
+	if (getperiod(selected) == marker.period){
+          marker.addTo(map);
+          console.log('.' + marker.period[0]);
+          d3.select('.' + marker.period[0]).transition().style('opacity', '1');
+        }else{
+        d3.select('.' + marker.period[0]).transition().style('opacity', '0.8');
+        }
+
       if (selected - range < marker.start_year && parseInt(selected) + range > marker.start_year){
         marker.openPopup();
         d3.select('#arrow' + marker.id).style('font-size','1.2em');
       }else{
         marker.closePopup();
         d3.select('#arrow' + marker.id).style('font-size','1em');
-      }
-
-      if (getperiod(selected) == marker.period){
-        marker.setOpacity(1)
-
-      }else{
-        marker.setOpacity(0)
-
       }
 
       });
@@ -112,6 +120,7 @@ function getperiod(start_year){
   }
 
 };
+
 
   <% end %>
 <% end %>
