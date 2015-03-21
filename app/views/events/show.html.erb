@@ -36,7 +36,7 @@
       <div class="row featurette">
         <div class="col-md-12">
 	  <div class="">
-		<a class="btn btn-primary" href="/?highlight=<%= @event.id %>" role="button">Back to map</a>
+		<button class="btn btn-primary" onclick="$.fancybox.close()">Back to map</a>
 		<% if @event.url %>
 		<a class="btn btn-info" href="<%= @event.url %>" role="button">More info</a>
 		<% end %>
