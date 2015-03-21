@@ -37,7 +37,7 @@
         <div class="col-md-12">
 	  <div class="">
 		<% if @ajax %>
-			<button class="btn btn-primary" onclick="$.fancybox.close()">Back to map</a>
+			<button class="btn btn-primary" onclick="$.fancybox.close()">Back to map</button>
 		<% else %>
 			<a class="btn btn-primary" href="/?highlight=<%= @event.id %>" role="button">View on map</a>
 		<% end %>
