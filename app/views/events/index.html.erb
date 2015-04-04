@@ -50,7 +50,7 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
   var tileAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoom: 5,maxZoom:18, zoomAnimationThreshold:7, touchZoom:true}).fitBounds(bounds);
+  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoom: 5,maxZoom:20, zoomAnimationThreshold:7, touchZoom:true}).fitBounds(bounds);
 
   L.tileLayer(tileServer, {attribution: tileAttribution, noWrap:true}).addTo(map);
 
