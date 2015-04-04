@@ -3,6 +3,8 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "leaflet";
+@import "MarkerCluster";
+@import "MarkerCluster.Default";
 
 html{height:100%;}
 
@@ -141,8 +143,12 @@ word-wrap: break-word;
 @media handheld, screen and (max-width : 770px) {
   .era li{
   font-size: 150%;
-  padding-left:0.3em;
+  padding-left:0.5em;
   }
+  #slider-container{
+  padding: 0;
+}
+
 }
 
 

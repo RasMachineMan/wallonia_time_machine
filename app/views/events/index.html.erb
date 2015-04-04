@@ -2,9 +2,7 @@
 <div id="container" >
   <div id="map" class="map"></div>
   <div id="slider-container">
-    <div class="col-sm-12 col-md-12">
       <div class="era list-inline"></div>
-    </div>
     <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
     <div id ="selected-year"></div>
   </div>
@@ -52,11 +50,12 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
 
   var tileAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoom: 5,zoomAnimationThreshold:7, touchZoom:true}).fitBounds(bounds);
+  var map = L.map("map",{bounceAtZoomLimits:false, worldCopyJump:true, zoom: 5,maxZoom:18, zoomAnimationThreshold:7, touchZoom:true}).fitBounds(bounds);
 
   L.tileLayer(tileServer, {attribution: tileAttribution, noWrap:true}).addTo(map);
 
   var markers = {};
+  // var markers = L.markerClusterGroup({showCoverageOnHover:false});
 
   var markerMap = {};
   var popUpMap = {};
@@ -73,17 +72,17 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       marker.period = getperiod(marker.start_year);
       markerMap[<%= event.id %>] = marker;
       popUpMap[<%= event.id %>] = markerMap[<%= event.id %>].bindPopup('<%= event.title %> <p><%= link_to("See more", event_path(event.id), { onclick: "$.fancybox( {href : '" + event_path(event.id) + "?ajax=yes', type: 'ajax'} );return false;" })  %></p>');
-      // markers[<%= event.id %>] = marker ;
       <% if event.icon_type %>
       marker.icon_type = '<%= event.icon_type %>'
       <% end %>
       marker.options.icon.options.className = "icon-round";
       marker.options.icon.options.html = '<div class="icon-circle ' + marker.period[0] + '">' + getIcon('<%= event.icon_type %>') + '</div><div class="tip fa fa-caret-down"></div>';
-      marker.addTo(map);
-	<% if @highlight == event.id %>
-	marker.openPopup();
-	<% end %>
-    <% end %>
+      // markers.addLayer(marker);
+    	<% if @highlight == event.id %>
+    	   marker.openPopup();
+    	<% end %>
+    map.addLayer(marker);
+  <% end %>
 
    document.getElementById('slider').addEventListener('change', function() {
 
@@ -96,9 +95,14 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
       var range = 30;
 
 	map.removeLayer(marker);
+
 	if (getperiod(selected) == marker.period){
     marker.options.icon.options.html = '<div class="icon-circle ' + marker.period[0] + '">' + getIcon(marker.icon_type) + '</div><div class="tip fa fa-caret-down"></div>';
-          marker.addTo(map);
+    // markers.addLayer(marker);
+    // console.log(marker)
+    // console.log('markers' + markers);
+    // markers.addTo(map);
+    marker.addTo(map);
           d3.selectAll('.' + marker.period[0]).transition().style('opacity', '1');
         }else{
           d3.selectAll('.' + marker.period[0]).transition().style('opacity', '0.5');
