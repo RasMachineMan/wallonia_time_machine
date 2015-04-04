@@ -2,7 +2,9 @@
 <div id="container" >
   <div id="map" class="map"></div>
   <div id="slider-container">
-    <div class="era list-inline"></div>
+    <div class="col-sm-12 col-md-12">
+      <div class="era list-inline"></div>
+    </div>
     <input id="slider" type="range" min=<%= Event::FIRST_YEAR %> max=<%= Event::LAST_YEAR %> step="10" />
     <div id ="selected-year"></div>
   </div>
@@ -83,7 +85,6 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
 	<% end %>
     <% end %>
 
-   var range = 100;
    document.getElementById('slider').addEventListener('change', function() {
 
         var selected = this.value;
@@ -91,7 +92,7 @@ var bounds = new L.LatLngBounds(arrayOfLatLngs);
         console.log("selected ", selected);
       _.each(markerMap, function(marker){
 
-
+      // range in which the marker pops-up
       var range = 30;
 
 	map.removeLayer(marker);

@@ -134,19 +134,17 @@ input[type='range']::-webkit-slider-thumb {
   padding-left: 1em;
   height: 3em;
   opacity:0.8;
-
+word-wrap: break-word;
   overflow: hidden;
 }
 
-@media screen and (max-width : 770px) {
+@media handheld, screen and (max-width : 770px) {
   .era li{
-  font-size: 200%;
+  font-size: 150%;
   padding-left:0.3em;
   }
-  .html{
-    font-size: 200%;
-  }
 }
+
 
 .A{
   background-color:rgba(200,100,100,0.5);
